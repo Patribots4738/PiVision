@@ -5,11 +5,11 @@
 
 #pragma once
 
-#include "targetver.h"
-
 #include <stdio.h>
-#include <tchar.h>
-
+#include <opencv2/opencv.hpp>
+#include <opencv2/core/cuda.hpp>
+#include <opencv2/core/ocl.hpp>
+#include "VisionCore.h"
 
 
 // TODO: reference additional headers your program requires here

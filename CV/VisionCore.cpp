@@ -1,15 +1,11 @@
 #include "stdafx.h"
-#include "VisionCore.h"
-#include <opencv2\opencv.hpp>
-#include <opencv2\core\cuda.hpp>
-#include <opencv2\core\ocl.hpp>
-
 using namespace std;
 
 cv::Scalar upperBound, lowerBound;
 float focalLength, actualHeight;
 
 //*******************************************
+
 struct VisionObject {
 	float actualHeight;
 	float pixelHeight;
@@ -58,7 +54,7 @@ cv::Mat dilateElement = cv::getStructuringElement(cv::MORPH_ERODE,
 	cv::Size(2 * 2 + 1, 2 * 2 + 1),
 	cv::Point(2, 2));
 
-VisionObject* DetectObjects(cv::Mat frame){
+VisionObject *DetectObjects(cv::Mat frame){
 	cv::flip(frame, frame, 1);
 
 	cv::Mat src, dst;
@@ -79,7 +75,7 @@ VisionObject* DetectObjects(cv::Mat frame){
 
 	cv::findContours(dst, contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
 
-	vector<vector<cv::Point>> approxCurve(contours.size()), hull(contours.size());
+	vector<vector<cv::Point> > approxCurve(contours.size()), hull(contours.size());
 	vector<VisionObject> vObjects;
 
 	for (int i = 0; i < contours.size(); i++) {
@@ -124,7 +120,7 @@ VisionObject* DetectObjects(cv::Mat frame){
 	return &vObjects[0];
 }
 
-VisionObject* DetectObjectsOCL(cv::Mat frame) {
+VisionObject *DetectObjectsOCL(cv::Mat frame) {
 	cv::flip(frame, frame, 1);
 	cv::ocl::setUseOpenCL(true); //Is that all? I'm not sure. I ain't finding any examples online
 
@@ -151,7 +147,7 @@ VisionObject* DetectObjectsOCL(cv::Mat frame) {
 
 	cv::findContours(dst, contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
 
-	vector<vector<cv::Point>> approxCurve(contours.size()), hull(contours.size());
+	vector<vector<cv::Point> > approxCurve(contours.size()), hull(contours.size());
 	vector<VisionObject> vObjects;
 
 	for (int i = 0; i < contours.size(); i++) {

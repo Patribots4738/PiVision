@@ -1,3 +1,10 @@
-﻿  CV.cpp
+﻿  VisionCore.cpp
+VisionCore.cpp(46): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(89): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+VisionCore.cpp(101): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(102): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+VisionCore.cpp(161): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+VisionCore.cpp(173): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(174): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
 CV.obj : error LNK2001: unresolved external symbol "public: struct VisionCore::VisionObject * __cdecl VisionCore::DetectObjects(class cv::Mat)" (?DetectObjects@VisionCore@@QEAAPEAUVisionObject@1@VMat@cv@@@Z)
 Z:\Visual Studio Projects\CV\x64\Release\CV.exe : fatal error LNK1120: 1 unresolved externals
