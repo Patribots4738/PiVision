@@ -1,6 +1,6 @@
 #include "stdafx.h"
-#include "VisionCore.h"
 #include <iostream>
+#include <opencv2/opencv.hpp>
 
 
 using namespace std;
@@ -30,13 +30,16 @@ int main()
 
 		vcore.setBounds(cv::Scalar(lowerH, lowerS, lowerV), cv::Scalar(upperH, upperS, upperV));
 		cap >> frame;
+<<<<<<< HEAD
 
 		
 		vcore.VisionCore::DetectObjects(frame);
 
 		cv::waitKey(1);
+=======
+		vcore.DetectObjects(frame);
+>>>>>>> parent of beb047b... Removed unused files, also fixed error that was preventing compiling
 	}
 
-	cap.release();
     return 0;
 }
