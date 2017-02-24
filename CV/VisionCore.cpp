@@ -1,4 +1,6 @@
 #include "stdafx.h"
+#include "VisionCore.h"
+
 using namespace std;
 
 cv::Scalar upperBound, lowerBound;
@@ -6,7 +8,7 @@ float focalLength, actualHeight;
 
 //*******************************************
 
-struct VisionObject {
+struct VisionCore::VisionObject {
 	float actualHeight;
 	float pixelHeight;
 	cv::Point center;
@@ -14,7 +16,7 @@ struct VisionObject {
 	float distance;
 };
 
-static string serializeVisionObject(VisionObject object){
+static string serializeVisionObject(VisionCore::VisionObject object){
 	string data = "";
 	data += std::to_string(object.actualHeight) + ",";
 	data += std::to_string(object.pixelHeight) + ",";
@@ -61,7 +63,7 @@ cv::Mat dilateElement = cv::getStructuringElement(cv::MORPH_ERODE,
 	cv::Size(2 * 2 + 1, 2 * 2 + 1),
 	cv::Point(2, 2));
 
-VisionObject *DetectObjects(cv::Mat frame){
+VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 	cv::flip(frame, frame, 1);
 
 	cv::Mat src, dst;
@@ -84,14 +86,14 @@ VisionObject *DetectObjects(cv::Mat frame){
 	cv::findContours(dst, contours, hierarchy, cv::RETR_TREE, cv::CHAIN_APPROX_SIMPLE, cv::Point(0, 0));
 
 	vector<vector<cv::Point> > approxCurve(contours.size()), hull(contours.size());
-	vector<VisionObject> vObjects;
+	vector<VisionCore::VisionObject> vObjects;
 
 	for (int i = 0; i < contours.size(); i++) {
 		cv::convexHull(contours.at(i), hull.at(i));
 		cv::approxPolyDP(contours.at(i), approxCurve.at(i), 0.1 * cv::arcLength(hull.at(i), false), true);
 
 		//Create our temp VisionObject to assign variables
-		VisionObject vObject; //VO => VisionObject
+		VisionCore::VisionObject vObject; //VO => VisionObject
 
 		cv::Moments m = cv::moments(contours.at(i), true);
 		cv::Point center(m.m10 / m.m00, m.m01 / m.m00); //Finds the center
@@ -128,7 +130,7 @@ VisionObject *DetectObjects(cv::Mat frame){
 	return &vObjects[0];
 }
 
-VisionObject *DetectObjectsOCL(cv::Mat frame) {
+VisionCore::VisionObject* VisionCore::DetectObjectsOCL(cv::Mat frame) {
 	cv::flip(frame, frame, 1);
 	cv::ocl::setUseOpenCL(true); //Is that all? I'm not sure. I ain't finding any examples online
 
@@ -164,7 +166,7 @@ VisionObject *DetectObjectsOCL(cv::Mat frame) {
 		cv::approxPolyDP(contours.at(i), approxCurve.at(i), 0.1 * cv::arcLength(hull.at(i), false), true);
 
 		//Create our temp VisionObject to assign variables
-		VisionObject vObject; //VO => VisionObject
+		VisionCore::VisionObject vObject; //VO => VisionObject
 
 		cv::Moments m = cv::moments(contours.at(i), true);
 		cv::Point center(m.m10 / m.m00, m.m01 / m.m00); //Finds the center
@@ -182,7 +184,6 @@ VisionObject *DetectObjectsOCL(cv::Mat frame) {
 		vObject.distance = distance;
 		vObject.pixelHeight = boundingBox.height;
 		vObject.angle = rect.angle;
-<<<<<<< HEAD
 
 		cv::Point2f points[4];
 		rect.points(points);
@@ -190,10 +191,6 @@ VisionObject *DetectObjectsOCL(cv::Mat frame) {
 
 	}
 	cv::imshow("src", src);
-=======
-		vObjects.push_back(vObject);
-	}
->>>>>>> parent of beb047b... Removed unused files, also fixed error that was preventing compiling
 
 	if (vObjects.empty()) {
 		return NULL;
