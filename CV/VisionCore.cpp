@@ -18,12 +18,12 @@ struct VisionCore::VisionObject {
 
 static string serializeVisionObject(VisionCore::VisionObject object){
 	string data = "";
-	data += std::to_string(object.actualHeight) + ",";
-	data += std::to_string(object.pixelHeight) + ",";
-	data += std::to_string(object.angle) + ",";
-	data += std::to_string(object.distance) + ",";
-	data += std::to_string(object.center.x) + ",";
-	data += std::to_string(object.center.y) + ",";
+	data += to_string(object.actualHeight) + ",";
+	data += to_string(object.pixelHeight) + ",";
+	data += to_string(object.angle) + ",";
+	data += to_string(object.distance) + ",";
+	data += to_string(object.center.x) + ",";
+	data += to_string(object.center.y) + ",";
 	return data;
 }
 //*******************************************
@@ -35,18 +35,11 @@ static void drawSquare(cv::Mat src, cv::Point2f points[], cv::Scalar color) {
 	cv::line(src, points[3], points[0], color);
 }
 
-static void drawSquare(cv::UMat src, cv::Point2f points[], cv::Scalar color) {
-	cv::line(src, points[0], points[1], color);
-	cv::line(src, points[1], points[2], color);
-	cv::line(src, points[2], points[3], color);
-	cv::line(src, points[3], points[0], color);
-}
-
 void VisionCore::setFocalLength(float length) {
 	focalLength = length;
 }
 
-void VisionCore::setBounds(cv::Scalar lower, cv::Scalar upper) {
+void VisionCore::setBounds(cv::Scalar upper, cv::Scalar lower) {
 	upperBound = upper;
 	lowerBound = lower;
 }
@@ -74,8 +67,7 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 
 	cv::GaussianBlur(dst, dst, cv::Size(5, 5), 2, 2);
 
-	cv::inRange(dst, lowerBound, upperBound, dst);
-	cv::imshow("dst", dst);
+	cv::inRange(dst, upperBound, upperBound, dst);
 
 	cv::erode(dst, dst, erodeElement);
 	cv::dilate(dst, dst, dilateElement);
@@ -116,12 +108,12 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 
 		cv::Point2f points[4];
 		rect.points(points);
-
 		drawSquare(src, points, cv::Scalar(255, 255, 255));
 
 	}
 
 	cv::imshow("src", src);
+	cv::imshow("dst", dst);
 
 	if(vObjects.empty()){
 		return NULL;
@@ -148,7 +140,6 @@ VisionCore::VisionObject* VisionCore::DetectObjectsOCL(cv::Mat frame) {
 	cv::GaussianBlur(dst, dst, cv::Size(5, 5), 2, 2);
 
 	cv::inRange(dst, upperBound, upperBound, dst);
-	cv::imshow("dst", dst);
 
 	cv::erode(dst, dst, uErodeElement);
 	cv::dilate(dst, dst, uDialateElement);
@@ -187,10 +178,13 @@ VisionCore::VisionObject* VisionCore::DetectObjectsOCL(cv::Mat frame) {
 
 		cv::Point2f points[4];
 		rect.points(points);
-		drawSquare(src, points, cv::Scalar(255, 255, 255));
+		drawSquare(frame, points, cv::Scalar(255, 255, 255));
 
 	}
+
+	frame.copyTo(src);
 	cv::imshow("src", src);
+	cv::imshow("dst", dst);
 
 	if (vObjects.empty()) {
 		return NULL;
