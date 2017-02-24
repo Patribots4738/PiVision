@@ -1,10 +1,12 @@
-﻿  VisionCore.cpp
-VisionCore.cpp(38): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-VisionCore.cpp(83): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-VisionCore.cpp(94): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-VisionCore.cpp(95): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-VisionCore.cpp(96): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-VisionCore.cpp(97): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+﻿  UDPManager.cpp
+  VisionCore.cpp
+VisionCore.cpp(50): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(93): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+VisionCore.cpp(105): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(106): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+VisionCore.cpp(152): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+VisionCore.cpp(164): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(165): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   Generating code
   10 of 15 functions (66.7%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
