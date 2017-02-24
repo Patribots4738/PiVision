@@ -9,7 +9,7 @@
 #include <opencv2/opencv.hpp>
 #include <opencv2/core/cuda.hpp>
 #include <opencv2/core/ocl.hpp>
-#include "VisionCore.h"
+#include <string>
 
 
 // TODO: reference additional headers your program requires here

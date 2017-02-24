@@ -1,6 +1,6 @@
 #include "stdafx.h"
+#include "VisionCore.h"
 #include <iostream>
-#include <opencv2/opencv.hpp>
 
 
 using namespace std;
@@ -27,8 +27,11 @@ int main()
 	while(true){
 		vcore.setBounds(cv::Scalar(upperH, upperS, upperV), cv::Scalar(lowerH, lowerS, lowerV));
 		cap >> frame;
-		vcore.DetectObjects(frame);
+		vcore.VisionCore::DetectObjects(frame);
+
+		cv::waitKey(1);
 	}
 
+	cap.release();
     return 0;
 }

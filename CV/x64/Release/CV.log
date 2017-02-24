@@ -1,10 +1,16 @@
-﻿  VisionCore.cpp
-VisionCore.cpp(46): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-VisionCore.cpp(89): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-VisionCore.cpp(101): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-VisionCore.cpp(102): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-VisionCore.cpp(161): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-VisionCore.cpp(173): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-VisionCore.cpp(174): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-CV.obj : error LNK2001: unresolved external symbol "public: struct VisionCore::VisionObject * __cdecl VisionCore::DetectObjects(class cv::Mat)" (?DetectObjects@VisionCore@@QEAAPEAUVisionObject@1@VMat@cv@@@Z)
-Z:\Visual Studio Projects\CV\x64\Release\CV.exe : fatal error LNK1120: 1 unresolved externals
+﻿  CV.cpp
+  VisionCore.cpp
+VisionCore.cpp(48): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(91): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+VisionCore.cpp(103): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(104): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+VisionCore.cpp(163): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+VisionCore.cpp(175): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(176): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Generating code
+  230 of 230 functions (100.0%) were compiled, the rest were copied from previous compilation.
+    83 functions were new in current compilation
+    0 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  CV.vcxproj -> Z:\Visual Studio Projects\CV\x64\Release\CV.exe
+  CV.vcxproj -> Z:\Visual Studio Projects\CV\x64\Release\CV.pdb (Full PDB)
