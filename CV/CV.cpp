@@ -16,16 +16,16 @@ int main()
 	cv::Mat frame;
 	VisionCore vcore(focalLength);
 
-	cv::createTrackbar("upperH", "dst", &upperH, 255);
-	cv::createTrackbar("upperS", "dst", &upperS, 255);
-	cv::createTrackbar("upperV", "dst", &upperV, 255);
-
-	cv::createTrackbar("lowerH", "dst", &lowerH, 255);
-	cv::createTrackbar("lowerS", "dst", &lowerS, 255);
-	cv::createTrackbar("lowerV", "dst", &lowerV, 255);
-
 	while(true){
-		vcore.setBounds(cv::Scalar(upperH, upperS, upperV), cv::Scalar(lowerH, lowerS, lowerV));
+		cv::createTrackbar("upperH", "dst", &upperH, 255);
+		cv::createTrackbar("upperS", "dst", &upperS, 255);
+		cv::createTrackbar("upperV", "dst", &upperV, 255);
+
+		cv::createTrackbar("lowerH", "dst", &lowerH, 255);
+		cv::createTrackbar("lowerS", "dst", &lowerS, 255);
+		cv::createTrackbar("lowerV", "dst", &lowerV, 255);
+
+		vcore.setBounds(cv::Scalar(lowerH, lowerS, lowerV), cv::Scalar(upperH, upperS, upperV));
 		cap >> frame;
 		vcore.VisionCore::DetectObjects(frame);
 

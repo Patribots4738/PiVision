@@ -4,7 +4,7 @@
 using namespace std;
 
 cv::Scalar upperBound, lowerBound;
-float focalLength, actualHeight;
+float focalLength = 458, actualHeight = 3;
 
 //*******************************************
 
@@ -35,11 +35,18 @@ static void drawSquare(cv::Mat src, cv::Point2f points[], cv::Scalar color) {
 	cv::line(src, points[3], points[0], color);
 }
 
+static void drawSquare(cv::UMat src, cv::Point2f points[], cv::Scalar color) {
+	cv::line(src, points[0], points[1], color);
+	cv::line(src, points[1], points[2], color);
+	cv::line(src, points[2], points[3], color);
+	cv::line(src, points[3], points[0], color);
+}
+
 void VisionCore::setFocalLength(float length) {
 	focalLength = length;
 }
 
-void VisionCore::setBounds(cv::Scalar upper, cv::Scalar lower) {
+void VisionCore::setBounds(cv::Scalar lower, cv::Scalar upper) {
 	upperBound = upper;
 	lowerBound = lower;
 }
@@ -67,10 +74,12 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 
 	cv::GaussianBlur(dst, dst, cv::Size(5, 5), 2, 2);
 
-	cv::inRange(dst, upperBound, upperBound, dst);
+	cv::inRange(dst, lowerBound, upperBound, dst);
 
 	cv::erode(dst, dst, erodeElement);
 	cv::dilate(dst, dst, dilateElement);
+
+	cv::imshow("dst", dst);
 
 	vector<vector<cv::Point> > contours;
 	vector<cv::Vec4i> hierarchy;
@@ -95,7 +104,7 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 		cv::RotatedRect rect = cv::minAreaRect(approxCurve.at(i));
 
 		//Calculate the distance based off of the object width
-		double distance = (actualHeight * focalLength) / boundingBox.width;
+		double distance = (actualHeight * focalLength) / (rect.size.height);
 
 		//Set the scruct value
 		vObject.actualHeight = actualHeight;
@@ -106,14 +115,16 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 
 		vObjects.push_back(vObject);
 
+		cv::rectangle(src, boundingBox, cv::Scalar(255, 255, 0));
+
 		cv::Point2f points[4];
 		rect.points(points);
 		drawSquare(src, points, cv::Scalar(255, 255, 255));
 
+		cv::putText(src, to_string(distance), vObject.center, cv::FONT_HERSHEY_COMPLEX, 0.5, cv::Scalar(255, 0, 0));
 	}
 
 	cv::imshow("src", src);
-	cv::imshow("dst", dst);
 
 	if(vObjects.empty()){
 		return NULL;
@@ -144,6 +155,8 @@ VisionCore::VisionObject* VisionCore::DetectObjectsOCL(cv::Mat frame) {
 	cv::erode(dst, dst, uErodeElement);
 	cv::dilate(dst, dst, uDialateElement);
 
+	cv::imshow("dst", dst);
+
 	vector<vector<cv::Point> > contours;
 	vector<cv::Vec4i> hierarchy;
 
@@ -167,7 +180,7 @@ VisionCore::VisionObject* VisionCore::DetectObjectsOCL(cv::Mat frame) {
 		cv::RotatedRect rect = cv::minAreaRect(approxCurve.at(i));
 
 		//Calculate the distance based off of the object width
-		double distance = (actualHeight * focalLength) / boundingBox.width;
+		double distance = (actualHeight * focalLength) / rect.size.height;
 
 		//Set the scruct value
 		vObject.actualHeight = actualHeight;
@@ -178,13 +191,11 @@ VisionCore::VisionObject* VisionCore::DetectObjectsOCL(cv::Mat frame) {
 
 		cv::Point2f points[4];
 		rect.points(points);
-		drawSquare(frame, points, cv::Scalar(255, 255, 255));
+		drawSquare(src, points, cv::Scalar(255, 255, 255));
 
 	}
 
-	frame.copyTo(src);
 	cv::imshow("src", src);
-	cv::imshow("dst", dst);
 
 	if (vObjects.empty()) {
 		return NULL;
