@@ -111,7 +111,7 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 		vObject.center = center;
 		vObject.distance = distance;
 		vObject.pixelHeight = boundingBox.height;
-		vObject.angle = rect.angle;
+		vObject.angle = rect.angle; //Calculate the screw?
 
 		vObjects.push_back(vObject);
 
