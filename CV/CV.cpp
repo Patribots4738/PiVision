@@ -11,7 +11,8 @@ int main()
 	cap.set(cv::CAP_PROP_FPS, 60);
 
 	int lowerH = 17, lowerS = 157, lowerV = 132, upperH = 35, upperS = 255, upperV = 255;
-	float focalLength = 505, targetWidth = 3;
+	float focalLength = 505, FOV = 76.6, targetWidth = 3;
+	//                       In Degrees
 
 	cv::Mat frame;
 	VisionCore vcore(focalLength);

@@ -13,7 +13,7 @@ public:
 	VisionCore(double focalLength);
 
 	VisionObject* DetectObjects(cv::Mat frame); //retun a pointer from the array
-	VisionObject* DetectObjectsOCL(cv::Mat frame); //retun a pointer from the array
+	VisionObject* DetectObjects(cv::UMat frame); //retun a pointer from the array
 private:
 	cv::Scalar upperBound, lowerBound;
 };

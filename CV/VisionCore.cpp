@@ -81,6 +81,9 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 
 	cv::imshow("dst", dst);
 
+	//Store the Width and Height of the Image in a | size - 0 - size | format
+	int width = src.size().width - (src.size().width / 2);
+
 	vector<vector<cv::Point> > contours;
 	vector<cv::Vec4i> hierarchy;
 
@@ -105,6 +108,11 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 
 		//Calculate the distance based off of the object width
 		double distance = (actualHeight * focalLength) / (rect.size.height);
+
+
+		//To find the actual positin on the 2D plane of the Distance we can use the tangent of the FOV
+		//Max Horizontal/Veritcal Visibility = distance * tan( FOV )
+		//Objects position is: (Center Position / Max Position) * Max Visibility
 
 		//Set the scruct value
 		vObject.actualHeight = actualHeight;
@@ -133,10 +141,9 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 	return &vObjects[0];
 }
 
-VisionCore::VisionObject* VisionCore::DetectObjectsOCL(cv::Mat frame) {
+VisionCore::VisionObject* VisionCore::DetectObjects(cv::UMat frame) {
 	cv::flip(frame, frame, 1);
-	cv::ocl::setUseOpenCL(true); //Is that all? I'm not sure. I ain't finding any examples online
-
+	
 	cv::UMat uDialateElement, uErodeElement;
 
 	dilateElement.copyTo(uDialateElement);
@@ -181,6 +188,8 @@ VisionCore::VisionObject* VisionCore::DetectObjectsOCL(cv::Mat frame) {
 
 		//Calculate the distance based off of the object width
 		double distance = (actualHeight * focalLength) / rect.size.height;
+
+		//To find the actual positin on the 2D plane of the Distance we can use the tangent of the FOV
 
 		//Set the scruct value
 		vObject.actualHeight = actualHeight;
