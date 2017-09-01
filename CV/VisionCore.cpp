@@ -4,7 +4,7 @@
 using namespace std;
 
 cv::Scalar upperBound, lowerBound;
-float focalLength = 458, actualHeight = 3;
+float focalLength = 458, actualHeight = 3, FOV = 76.6;
 
 //*******************************************
 
@@ -44,6 +44,10 @@ static void drawSquare(cv::UMat src, cv::Point2f points[], cv::Scalar color) {
 
 void VisionCore::setFocalLength(float length) {
 	focalLength = length;
+}
+
+void VisionCore::setFOV(double fov) {
+	FOV = fov;
 }
 
 void VisionCore::setBounds(cv::Scalar lower, cv::Scalar upper) {
@@ -113,6 +117,8 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 		//To find the actual positin on the 2D plane of the Distance we can use the tangent of the FOV
 		//Max Horizontal/Veritcal Visibility = distance * tan( FOV )
 		//Objects position is: (Center Position / Max Position) * Max Visibility
+		double maxVisibility = distance * tan(FOV);
+
 
 		//Set the scruct value
 		vObject.actualHeight = actualHeight;

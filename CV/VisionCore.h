@@ -4,12 +4,13 @@
 
 class VisionCore {
 public:
-	float focalLength, actualHeight;
+	float focalLength, actualHeight, FOV;
 
 	struct VisionObject;
 
 	void setBounds(cv::Scalar upper, cv::Scalar lower);
 	void setFocalLength(float length);
+	void setFOV(double fov);
 	VisionCore(double focalLength);
 
 	VisionObject* DetectObjects(cv::Mat frame); //retun a pointer from the array

@@ -1,14 +1,18 @@
-﻿  VisionCore.cpp
-VisionCore.cpp(55): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-VisionCore.cpp(103): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-VisionCore.cpp(120): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-VisionCore.cpp(121): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-VisionCore.cpp(183): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-VisionCore.cpp(197): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-VisionCore.cpp(198): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+﻿  CV.cpp
+CV.cpp(14): warning C4305: 'initializing': truncation from 'double' to 'float'
+  VisionCore.cpp
+VisionCore.cpp(7): warning C4305: 'initializing': truncation from 'double' to 'float'
+VisionCore.cpp(50): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(59): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(107): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+VisionCore.cpp(126): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(127): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+VisionCore.cpp(189): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+VisionCore.cpp(203): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(204): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   Generating code
-  35 of 484 functions ( 7.2%) were compiled, the rest were copied from previous compilation.
-    0 functions were new in current compilation
+  37 of 485 functions ( 7.6%) were compiled, the rest were copied from previous compilation.
+    1 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   CV.vcxproj -> C:\Users\Jacob\Desktop\PiVision\x64\Release\CV.exe
