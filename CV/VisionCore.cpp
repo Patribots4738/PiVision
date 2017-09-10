@@ -120,9 +120,9 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 
 		cv::Point adjCenter(center.x - (center.x / 2), center.y - (center.y / 2));
 		//To find the actual positin on the 2D plane of the Distance we can use the tangent of the FOV
-		//Max Horizontal/Veritcal Visibility = distance * tan( FOV )
+		//Max Horizontal/Veritcal Visibility = distance * tan( FOV / 2 )
 		//Objects position is: (Center Position / Max Position) * Max Visibility
-		double maxVisibility = distance * tan(FOV);
+		double maxVisibility = distance * tan(FOV / 2);
 		cv::Point realPos(((double)adjCenter.x / (double)width) * maxVisibility, ((double)adjCenter.x / (double)width) * maxVisibility);
 		
 		// ---------------------------------------------------
