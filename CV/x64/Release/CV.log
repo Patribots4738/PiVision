@@ -1,19 +1,18 @@
-﻿  CV.cpp
-CV.cpp(14): warning C4305: 'initializing': truncation from 'double' to 'float'
-  VisionCore.cpp
+﻿  VisionCore.cpp
 VisionCore.cpp(7): warning C4305: 'initializing': truncation from 'double' to 'float'
 VisionCore.cpp(50): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 VisionCore.cpp(59): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-VisionCore.cpp(107): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-VisionCore.cpp(126): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-VisionCore.cpp(127): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-VisionCore.cpp(189): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-VisionCore.cpp(203): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-VisionCore.cpp(204): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+VisionCore.cpp(109): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+VisionCore.cpp(126): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+VisionCore.cpp(133): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(134): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+VisionCore.cpp(196): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+VisionCore.cpp(210): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+VisionCore.cpp(211): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
   Generating code
-  37 of 485 functions ( 7.6%) were compiled, the rest were copied from previous compilation.
-    1 functions were new in current compilation
-    0 functions had inline decision re-evaluated but remain unchanged
+  35 of 477 functions ( 7.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    4 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
   CV.vcxproj -> C:\Users\Jacob\Desktop\PiVision\x64\Release\CV.exe
   CV.vcxproj -> C:\Users\Jacob\Desktop\PiVision\x64\Release\CV.pdb (Full PDB)

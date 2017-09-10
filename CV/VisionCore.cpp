@@ -4,13 +4,13 @@
 using namespace std;
 
 cv::Scalar upperBound, lowerBound;
-float focalLength = 458, actualHeight = 3, FOV = 76.6;
+float focalLength = 458, actualWidth = 3, FOV = 76.6;
 
 //*******************************************
 
 struct VisionCore::VisionObject {
-	float actualHeight;
-	float pixelHeight;
+	float actualWidth;
+	float pixelWidth;
 	cv::Point center;
 	float angle;
 	float distance;
@@ -18,8 +18,8 @@ struct VisionCore::VisionObject {
 
 static string serializeVisionObject(VisionCore::VisionObject object){
 	string data = "";
-	data += to_string(object.actualHeight) + ",";
-	data += to_string(object.pixelHeight) + ",";
+	data += to_string(object.actualWidth) + ",";
+	data += to_string(object.pixelWidth) + ",";
 	data += to_string(object.angle) + ",";
 	data += to_string(object.distance) + ",";
 	data += to_string(object.center.x) + ",";
@@ -61,11 +61,11 @@ VisionCore::VisionCore(double focalLength) {
 
 cv::Mat erodeElement = cv::getStructuringElement(cv::MORPH_ERODE,
 	cv::Size(2 * 1 + 1, 2 * 1 + 1),
-	cv::Point(1, 1));
+	cv::Point(2, 2));
 
 cv::Mat dilateElement = cv::getStructuringElement(cv::MORPH_ERODE,
 	cv::Size(2 * 2 + 1, 2 * 2 + 1),
-	cv::Point(2, 2));
+	cv::Point(4, 4));
 
 VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 	cv::flip(frame, frame, 1);
@@ -82,10 +82,12 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 
 	cv::erode(dst, dst, erodeElement);
 	cv::dilate(dst, dst, dilateElement);
+	cv::dilate(dst, dst, dilateElement);
+	cv::dilate(dst, dst, dilateElement);
 
 	cv::imshow("dst", dst);
 
-	//Store the Width and Height of the Image in a | size - 0 - size | format
+	//Store the Width and Width of the Image in a | size - 0 - size | format
 	int width = src.size().width - (src.size().width / 2);
 
 	vector<vector<cv::Point> > contours;
@@ -111,20 +113,25 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 		cv::RotatedRect rect = cv::minAreaRect(approxCurve.at(i));
 
 		//Calculate the distance based off of the object width
-		double distance = (actualHeight * focalLength) / (rect.size.height);
+		double distance = (actualWidth * focalLength) / (rect.size.width);
 
 
+		// Do this on the RoboRIO!!!!
+
+		cv::Point adjCenter(center.x - (center.x / 2), center.y - (center.y / 2));
 		//To find the actual positin on the 2D plane of the Distance we can use the tangent of the FOV
 		//Max Horizontal/Veritcal Visibility = distance * tan( FOV )
 		//Objects position is: (Center Position / Max Position) * Max Visibility
 		double maxVisibility = distance * tan(FOV);
-
+		cv::Point realPos(((double)adjCenter.x / (double)width) * maxVisibility, ((double)adjCenter.x / (double)width) * maxVisibility);
+		
+		// ---------------------------------------------------
 
 		//Set the scruct value
-		vObject.actualHeight = actualHeight;
+		vObject.actualWidth = actualWidth;
 		vObject.center = center;
 		vObject.distance = distance;
-		vObject.pixelHeight = boundingBox.height;
+		vObject.pixelWidth = boundingBox.width;
 		vObject.angle = rect.angle; //Calculate the screw?
 
 		vObjects.push_back(vObject);
@@ -135,7 +142,7 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 		rect.points(points);
 		drawSquare(src, points, cv::Scalar(255, 255, 255));
 
-		cv::putText(src, to_string(distance), vObject.center, cv::FONT_HERSHEY_COMPLEX, 0.5, cv::Scalar(255, 0, 0));
+		cv::putText(src, to_string(realPos.x), vObject.center, cv::FONT_HERSHEY_COMPLEX, 0.5, cv::Scalar(255, 0, 0));
 	}
 
 	cv::imshow("src", src);
@@ -193,15 +200,15 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::UMat frame) {
 		cv::RotatedRect rect = cv::minAreaRect(approxCurve.at(i));
 
 		//Calculate the distance based off of the object width
-		double distance = (actualHeight * focalLength) / rect.size.height;
+		double distance = (actualWidth * focalLength) / rect.size.width;
 
 		//To find the actual positin on the 2D plane of the Distance we can use the tangent of the FOV
 
 		//Set the scruct value
-		vObject.actualHeight = actualHeight;
+		vObject.actualWidth = actualWidth;
 		vObject.center = center;
 		vObject.distance = distance;
-		vObject.pixelHeight = boundingBox.height;
+		vObject.pixelWidth = boundingBox.width;
 		vObject.angle = rect.angle;
 
 		cv::Point2f points[4];
