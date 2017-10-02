@@ -6,3 +6,4 @@ This is some example code to give you guys a start at programming vision code! T
 - Positional Detection
 ## What Currently Doesn't Work
 - Pretty much all of the netcode
+- Positional correction for rotation
