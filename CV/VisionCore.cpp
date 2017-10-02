@@ -74,12 +74,21 @@ VisionCore::VisionObject* VisionCore::DetectObjects(cv::Mat frame){
 	src = frame.clone();
 	dst = frame.clone();
 
+	/*Convert to the Gue Saturation Value colorspace
+		This makes actually finding the correct color a lot easier
+		Because when we look for the specific color we don't have to take in to account
+		How brightness changes the RGB values it'll only change the V in HSV colorspace
+	*/
 	cv::cvtColor(dst, dst, cv::COLOR_BGR2HSV);
 
 	cv::GaussianBlur(dst, dst, cv::Size(5, 5), 2, 2);
 
 	cv::inRange(dst, lowerBound, upperBound, dst);
-
+	
+	/*Here we are just removing noise
+		Erode takes the blacks and tries to remove some white
+		Dialate is the opposite of erode
+	*/
 	cv::erode(dst, dst, erodeElement);
 	cv::dilate(dst, dst, dilateElement);
 	cv::dilate(dst, dst, dilateElement);
